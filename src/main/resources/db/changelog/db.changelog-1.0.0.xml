@@ -1,0 +1,22 @@
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+  <changeSet id="1.0.0" author="lm.dba" context="local, dev, prod">
+    <createTable tableName="user">
+      <column name="id" type="BIGINT" autoIncrement="true"
+        remarks="PK: unique 8-bytes ID">
+        <constraints primaryKey="true" nullable="false"
+          unique="true"/>
+      </column>
+      <column name="email" type="varchar(64)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="password" type="varchar(64)">
+        <constraints nullable="false"/>
+      </column>
+    </createTable>
+  </changeSet>
+
+</databaseChangeLog>

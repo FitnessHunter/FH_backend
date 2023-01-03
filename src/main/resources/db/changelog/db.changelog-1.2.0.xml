@@ -1,0 +1,35 @@
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+  <changeSet id="1.2.0" author="lm.dba" context="local, dev, prod">
+    <createTable tableName="training">
+      <column name="id" type="BIGINT" autoIncrement="true"
+        remarks="PK: unique 8-bytes ID">
+        <constraints primaryKey="true" nullable="false"
+          unique="true"/>
+      </column>
+      <column name="name" type="varchar(32)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="description" type="varchar(128)">
+        <constraints nullable="true"/>
+      </column>
+      <column name="date" type="DATE">
+        <constraints nullable="false"/>
+      </column>
+      <column name="program_id" type="BIGINT" remarks="FK: unique 8-bytes ID">
+        <constraints nullable="false"/>
+      </column>
+    </createTable>
+    <addForeignKeyConstraint baseTableName="training"
+      baseColumnNames="program_id"
+      constraintName="fk_training_to_program"
+      referencedTableName="program"
+      referencedColumnNames="id"
+      onDelete="RESTRICT"
+      onUpdate="RESTRICT"/>
+  </changeSet>
+
+</databaseChangeLog>
