@@ -39,8 +39,7 @@ jobs:
             git checkout master
             git pull origin master
             sudo chmod +x ./deploy.sh
-            ./deploy.sh
-          '
+            ./deploy.sh'
           rm -rf private_key.pem
       - name: Remove github actions IP from security group
         env:
