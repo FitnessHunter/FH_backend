@@ -1,0 +1,32 @@
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+  <changeSet id="1.9.0" author="lm.dba" context="local, dev, prod">
+    <createTable tableName="custom_exercise_details">
+      <column name="id" type="BIGINT" autoIncrement="true"
+        remarks="PK: unique 8-bytes ID">
+        <constraints primaryKey="true" nullable="false"
+          unique="true"/>
+      </column>
+      <column name="animation_path" type="varchar(64)" remarks="FK: unique 8-bytes ID">
+        <constraints nullable="true"/>
+      </column>
+      <column name="comment" type="varchar(128)">
+        <constraints nullable="true"/>
+      </column>
+      <column name="default_exercise_details_id" type="BIGINT" remarks="FK: unique 8-bytes ID">
+        <constraints nullable="false"/>
+      </column>
+    </createTable>
+    <addForeignKeyConstraint baseTableName="custom_exercise_details"
+      baseColumnNames="default_exercise_details_id"
+      constraintName="fk_custom_exercise_details_to_default_exercise_details"
+      referencedTableName="default_exercise_details"
+      referencedColumnNames="id"
+      onDelete="RESTRICT"
+      onUpdate="RESTRICT"/>
+  </changeSet>
+
+</databaseChangeLog>
