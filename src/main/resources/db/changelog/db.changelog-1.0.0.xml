@@ -19,4 +19,9 @@
     </createTable>
   </changeSet>
 
+  <changeSet id="1.0.1" author="fh.dba" context="local, dev, prod">
+    <renameTable newTableName="user_info"
+      oldTableName="user"/>
+  </changeSet>
+
 </databaseChangeLog>
