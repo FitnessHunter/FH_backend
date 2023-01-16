@@ -3,7 +3,7 @@
   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
 
-  <changeSet id="1.0.0" author="lm.dba" context="local, dev, prod">
+  <changeSet id="1.0.0" author="fh.dba" context="local, dev, prod">
     <createTable tableName="user">
       <column name="id" type="BIGINT" autoIncrement="true"
         remarks="PK: unique 8-bytes ID">
