@@ -29,7 +29,7 @@
     <addForeignKeyConstraint baseTableName="default_exercise_details"
       baseColumnNames="trainer_id"
       constraintName="fk_default_exercise_details_to_user"
-      referencedTableName="user"
+      referencedTableName="user_info"
       referencedColumnNames="id"
       onDelete="RESTRICT"
       onUpdate="RESTRICT"/>

@@ -1,15 +1,20 @@
 package com.softlex.fh.config;
 
+import static com.softlex.fh.service.token.JwtService.JWT_CLAIM_EMAIL;
+import static com.softlex.fh.service.token.JwtService.JWT_CLAIM_ID;
+
 import com.auth0.jwt.exceptions.JWTVerificationException;
-import com.softlex.fh.service.token.JwtService;
+import com.softlex.fh.dto.user.UserPrincipal;
 import com.softlex.fh.service.token.CustomUserDetailsService;
+import com.softlex.fh.service.token.JwtService;
 import java.io.IOException;
+import java.util.Map;
+import java.util.Objects;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,7 +26,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
   public static final String BEARER_PREFIX = "Bearer ";
-  private CustomUserDetailsService userDetailsService;
+  private CustomUserDetailsService customUserDetailsService;
   private JwtService jwtService;
 
 
@@ -36,10 +41,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid JWT Token in Bearer Header");
       } else {
         try {
-          String email = jwtService.validateTokenAndRetrieveSubject(jwt);
-          UserDetails userDetails = userDetailsService.loadUserByUsername(email);
+          Map<String, Object> userInfoMap = jwtService.validateTokenAndRetrieveSubject(jwt);
+          UserDetails userDetails = customUserDetailsService.loadUserByUsername((String) userInfoMap.get(JWT_CLAIM_EMAIL));
           UsernamePasswordAuthenticationToken authToken =
-              new UsernamePasswordAuthenticationToken(email, userDetails.getPassword(), userDetails.getAuthorities());
+              new UsernamePasswordAuthenticationToken(userInfoMap.get(JWT_CLAIM_ID), userDetails.getPassword(), userDetails.getAuthorities());
           if (SecurityContextHolder.getContext().getAuthentication() == null) {
             SecurityContextHolder.getContext().setAuthentication(authToken);
           }

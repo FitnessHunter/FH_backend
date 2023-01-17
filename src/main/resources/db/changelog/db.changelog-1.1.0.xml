@@ -20,14 +20,14 @@
     <addForeignKeyConstraint baseTableName="program"
       baseColumnNames="owner_id"
       constraintName="fk_program_owner_id_to_user"
-      referencedTableName="user"
+      referencedTableName="user_info"
       referencedColumnNames="id"
       onDelete="RESTRICT"
       onUpdate="RESTRICT"/>
     <addForeignKeyConstraint baseTableName="program"
       baseColumnNames="sportsman_id"
       constraintName="fk_program_sportsman_id_to_user"
-      referencedTableName="user"
+      referencedTableName="user_info"
       referencedColumnNames="id"
       onDelete="RESTRICT"
       onUpdate="RESTRICT"/>

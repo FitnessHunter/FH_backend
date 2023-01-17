@@ -1,5 +1,6 @@
 package com.softlex.fh.config;
 
+import com.softlex.fh.dto.user.UserPrincipal;
 import com.softlex.fh.service.token.CustomUserDetailsService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -14,7 +15,7 @@ import org.springframework.stereotype.Component;
 @AllArgsConstructor
 public class CustomAuthProvider implements AuthenticationProvider {
 
-  private CustomUserDetailsService userDetailsService;
+  private CustomUserDetailsService customUserDetailsService;
   private PasswordEncoder passwordEncoder;
 
   @Override
@@ -24,7 +25,7 @@ public class CustomAuthProvider implements AuthenticationProvider {
 
     // Get the User from UserDetailsService
     String providedUsername = authentication.getPrincipal().toString();
-    UserDetails user = userDetailsService.loadUserByUsername(providedUsername);
+    UserDetails user = customUserDetailsService.loadUserByUsername(providedUsername);
     System.out.println("User Details from UserService based on username-" + providedUsername + " : " + user);
 
     String providedPassword = authentication.getCredentials().toString();

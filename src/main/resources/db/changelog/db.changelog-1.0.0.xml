@@ -24,4 +24,23 @@
       oldTableName="user"/>
   </changeSet>
 
+  <changeSet id="1.0.2" author="fh.dba" context="local, dev, prod">
+    <addUniqueConstraint tableName="user_info"
+      columnNames="email"
+      constraintName="user_email_unique"/>
+  </changeSet>
+  <changeSet id="1.0.3" author="fh.dba" context="local, dev, prod">
+    <addColumn tableName="user_info">
+      <column name="first_name" type="varchar(64)">
+        <constraints nullable="true" />
+      </column>
+      <column name="last_name" type="varchar(64)">
+        <constraints nullable="true" />
+      </column>
+      <column name="image" type="bytea">
+        <constraints nullable="true" />
+      </column>
+    </addColumn>
+  </changeSet>
+
 </databaseChangeLog>
