@@ -25,7 +25,6 @@ public class SwaggerConfig {
     return new Docket(DocumentationType.SWAGGER_2)
         .securityContexts(Arrays.asList(securityContext()))
         .securitySchemes(Arrays.asList(apiKey()))
-        .host("localhost:8080")
         .select()
         .apis(RequestHandlerSelectors.basePackage("com.softlex.fh.controller"))
         .paths(PathSelectors.any())
