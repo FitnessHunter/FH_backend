@@ -21,6 +21,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 @AllArgsConstructor
@@ -40,7 +41,11 @@ public class UserServiceImpl implements UserService {
     }
     String encodedPass = passwordEncoder.encode(registrationRequest.getPassword());
     registrationRequest.setPassword(encodedPass);
-    byte[] bytes = registrationRequest.getImage().getBytes();
+    MultipartFile image = registrationRequest.getImage();
+    byte[] bytes = null;
+    if(image != null){
+     bytes = image.getBytes();
+    }
     User user = userMapper.toEntity(registrationRequest, bytes);
     User savedUser = userRepository.save(user);
     String token = jwtUtil.generateToken(savedUser);
