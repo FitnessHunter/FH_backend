@@ -17,7 +17,6 @@ import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
-import com.google.common.net.HttpHeaders;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -33,7 +32,7 @@ public class CorsCustomFilter implements Filter {
         HttpServletResponse response = (HttpServletResponse) res;
         HttpServletRequest request = (HttpServletRequest) req;
 
-        String origin = request.getHeader(HttpHeaders.ORIGIN);
+        String origin = request.getHeader("Origin");
         log.debug("Received request from: " + origin);
         if (allowedOrigins.contains(origin)) {
         	response.setHeader("Access-Control-Allow-Origin", origin);
