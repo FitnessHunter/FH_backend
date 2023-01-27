@@ -2,6 +2,8 @@ package com.softlex.fh.config;
 
 
 import com.softlex.fh.service.token.CustomUserDetailsService;
+import java.util.List;
+import java.util.Set;
 import javax.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
 import org.apache.logging.log4j.LogManager;
@@ -17,6 +19,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
 
 @Configuration
 @EnableWebSecurity
@@ -35,11 +38,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   private final Logger log = LogManager.getLogger(SecurityConfig.class);
   private CustomUserDetailsService uds;
 
+  private static final List<String> allowedOrigins = List.of("http://localhost:3000");
   @Override
   protected void configure(HttpSecurity http) throws Exception {
     http.csrf().disable()
         .httpBasic().disable()
         .cors()
+        .configurationSource(request -> {
+          CorsConfiguration corsConfiguration = new CorsConfiguration();
+          corsConfiguration.setAllowedOriginPatterns(allowedOrigins);
+          corsConfiguration.setAllowedHeaders(List.of("*"));
+          corsConfiguration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "PUT","OPTIONS","PATCH", "DELETE"));
+          corsConfiguration.setAllowCredentials(true);
+          corsConfiguration.applyPermitDefaultValues();
+          return corsConfiguration;
+        })
         .and()
         .authorizeHttpRequests(authorizationManagerRequestMatcherRegistry ->
             authorizationManagerRequestMatcherRegistry
