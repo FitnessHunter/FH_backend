@@ -17,5 +17,14 @@
       constraintName="pk_executed_attempt"
       tableName="executed_attempt"/>
   </changeSet>
-
+  <changeSet id="1.6.1" author="fh.dba" context="local, dev, prod">
+    <addForeignKeyConstraint baseTableName="executed_attempt"
+      baseColumnNames="parent_attempt_id"
+      constraintName="fk_parent_attempt_to_attempt"
+      referencedTableName="attempt"
+      referencedColumnNames="id"
+      onDelete="RESTRICT"
+      onUpdate="RESTRICT"/>
+    <renameColumn tableName="executed_attempt" oldColumnName="executed_attempt_id" newColumnName="id"/>
+  </changeSet>
 </databaseChangeLog>
