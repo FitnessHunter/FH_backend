@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @ControllerAdvice
 @Slf4j
 public class ControllerExceptionHandler {
+
   @ExceptionHandler({DBConflictException.class})
   public void handleDatabaseConflictException(HttpServletResponse response, DBConflictException ex,
       HttpServletRequest request) throws IOException {

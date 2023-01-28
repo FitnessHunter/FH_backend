@@ -32,13 +32,13 @@
   <changeSet id="1.0.3" author="fh.dba" context="local, dev, prod">
     <addColumn tableName="user_info">
       <column name="first_name" type="varchar(64)">
-        <constraints nullable="true" />
+        <constraints nullable="true"/>
       </column>
       <column name="last_name" type="varchar(64)">
-        <constraints nullable="true" />
+        <constraints nullable="true"/>
       </column>
       <column name="image" type="bytea">
-        <constraints nullable="true" />
+        <constraints nullable="true"/>
       </column>
     </addColumn>
   </changeSet>

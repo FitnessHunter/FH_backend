@@ -10,6 +10,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CreateTrainingRequest {
+
   private Long programId;
   private String name;
   private String description;

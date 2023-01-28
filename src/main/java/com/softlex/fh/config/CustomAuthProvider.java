@@ -1,6 +1,5 @@
 package com.softlex.fh.config;
 
-import com.softlex.fh.dto.user.UserPrincipal;
 import com.softlex.fh.service.token.CustomUserDetailsService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.AuthenticationProvider;

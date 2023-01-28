@@ -6,6 +6,7 @@ import com.softlex.fh.entity.program.Program;
 public interface ProgramService {
 
   Program getProgram(Long programId);
+
   Program createProgram(CreateProgramRequest createProgramRequest);
 
 }

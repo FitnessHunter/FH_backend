@@ -26,7 +26,7 @@ public class Exercise {
   @Column(name = "id")
   private Long id;
   @ManyToOne
-  @JoinColumn(name="training_id", nullable=false)
+  @JoinColumn(name = "training_id", nullable = false)
   private Training training;
   @Column(name = "ordinal_number")
   @NotNull

@@ -3,7 +3,6 @@ package com.softlex.fh.service.program;
 import com.softlex.fh.dto.request.CreateProgramRequest;
 import com.softlex.fh.entity.program.Program;
 import com.softlex.fh.entity.program.ProgramRepository;
-import com.softlex.fh.entity.training.Training;
 import com.softlex.fh.entity.user.User;
 import com.softlex.fh.entity.user.UserRepository;
 import java.util.Optional;
@@ -22,7 +21,7 @@ public class ProgramServiceImpl implements ProgramService {
   @Override
   public Program getProgram(Long programId) {
     Optional<Program> programOptional = programRepository.findById(programId);
-    if(programOptional.isPresent()){
+    if (programOptional.isPresent()) {
       return programOptional.get();
     } else {
       throw new EntityNotFoundException("Wrong program id");

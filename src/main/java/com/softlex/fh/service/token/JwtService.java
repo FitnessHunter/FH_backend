@@ -9,9 +9,7 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.softlex.fh.entity.user.User;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -32,7 +30,7 @@ public class JwtService {
         .sign(Algorithm.HMAC256(secret));
   }
 
-  public Map<String, Object> validateTokenAndRetrieveSubject(String token)throws JWTVerificationException {
+  public Map<String, Object> validateTokenAndRetrieveSubject(String token) throws JWTVerificationException {
     JWTVerifier verifier = JWT.require(Algorithm.HMAC256(secret))
         .withSubject("User Details")
         .withIssuer("YOUR APPLICATION/PROJECT/COMPANY NAME")

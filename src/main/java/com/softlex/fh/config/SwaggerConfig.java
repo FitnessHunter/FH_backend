@@ -1,6 +1,7 @@
 package com.softlex.fh.config;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,16 +21,18 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 public class SwaggerConfig {
 
   private static final String AUTH = "JWT";
+
   @Bean
   public Docket api() {
     return new Docket(DocumentationType.SWAGGER_2)
-        .securityContexts(Arrays.asList(securityContext()))
-        .securitySchemes(Arrays.asList(apiKey()))
+        .securityContexts(Collections.singletonList(securityContext()))
+        .securitySchemes(List.of(apiKey()))
         .select()
         .apis(RequestHandlerSelectors.basePackage("com.softlex.fh.controller"))
         .paths(PathSelectors.any())
         .build();
   }
+
   private ApiKey apiKey() {
     return new ApiKey(AUTH, HttpHeaders.AUTHORIZATION, "header");
   }
@@ -42,6 +45,6 @@ public class SwaggerConfig {
     AuthorizationScope authorizationScope = new AuthorizationScope("global", "accessEverything");
     AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
     authorizationScopes[0] = authorizationScope;
-    return Arrays.asList(new SecurityReference("JWT", authorizationScopes));
+    return List.of(new SecurityReference("JWT", authorizationScopes));
   }
 }

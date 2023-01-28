@@ -3,7 +3,6 @@ package com.softlex.fh.config;
 
 import com.softlex.fh.service.token.CustomUserDetailsService;
 import java.util.List;
-import java.util.Set;
 import javax.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
 import org.apache.logging.log4j.LogManager;
@@ -12,7 +11,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -39,6 +37,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   private CustomUserDetailsService uds;
 
   private static final List<String> allowedOrigins = List.of("http://localhost:3000");
+
   @Override
   protected void configure(HttpSecurity http) throws Exception {
     http.csrf().disable()
@@ -48,7 +47,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
           CorsConfiguration corsConfiguration = new CorsConfiguration();
           corsConfiguration.setAllowedOriginPatterns(allowedOrigins);
           corsConfiguration.setAllowedHeaders(List.of("*"));
-          corsConfiguration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "PUT","OPTIONS","PATCH", "DELETE"));
+          corsConfiguration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "PUT", "OPTIONS", "PATCH", "DELETE"));
           corsConfiguration.setAllowCredentials(true);
           corsConfiguration.applyPermitDefaultValues();
           return corsConfiguration;

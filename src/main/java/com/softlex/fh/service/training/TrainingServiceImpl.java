@@ -8,7 +8,6 @@ import com.softlex.fh.entity.training.TrainingRepository;
 import java.util.Optional;
 import javax.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -22,7 +21,7 @@ public class TrainingServiceImpl implements TrainingService {
   @Override
   public Training getTraining(Long trainingId) {
     Optional<Training> trainingOptional = trainingRepository.findById(trainingId);
-    if(trainingOptional.isPresent()){
+    if (trainingOptional.isPresent()) {
       return trainingOptional.get();
     } else {
       throw new EntityNotFoundException("Wrong training id");
@@ -32,7 +31,7 @@ public class TrainingServiceImpl implements TrainingService {
   @Override
   public Training createTraining(CreateTrainingRequest createTrainingRequest) {
     Optional<Program> programOptional = programRepository.findById(createTrainingRequest.getProgramId());
-    if(programOptional.isPresent()) {
+    if (programOptional.isPresent()) {
       Program program = programOptional.get();
       Training training = trainingMapper.toEntity(createTrainingRequest, program);
       return trainingRepository.save(training);

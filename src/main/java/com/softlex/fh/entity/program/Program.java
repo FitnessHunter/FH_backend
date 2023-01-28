@@ -16,7 +16,6 @@ import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 @Data
 @AllArgsConstructor
@@ -30,10 +29,10 @@ public class Program {
   @Column(name = "id")
   private Long id;
   @ManyToOne
-  @JoinColumn(name="owner_id", nullable=false)
+  @JoinColumn(name = "owner_id", nullable = false)
   private User owner;
   @ManyToOne
-  @JoinColumn(name="sportsman_id", nullable=false)
+  @JoinColumn(name = "sportsman_id", nullable = false)
   private User sportsman;
   @Column(name = "programDescription")
   private String programDescription;

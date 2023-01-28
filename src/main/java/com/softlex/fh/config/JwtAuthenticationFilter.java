@@ -4,12 +4,10 @@ import static com.softlex.fh.service.token.JwtService.JWT_CLAIM_EMAIL;
 import static com.softlex.fh.service.token.JwtService.JWT_CLAIM_ID;
 
 import com.auth0.jwt.exceptions.JWTVerificationException;
-import com.softlex.fh.dto.user.UserPrincipal;
 import com.softlex.fh.service.token.CustomUserDetailsService;
 import com.softlex.fh.service.token.JwtService;
 import java.io.IOException;
 import java.util.Map;
-import java.util.Objects;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;

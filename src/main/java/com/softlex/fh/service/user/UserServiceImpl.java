@@ -12,7 +12,6 @@ import com.softlex.fh.service.token.JwtService;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.Optional;
-import javax.security.auth.login.CredentialNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -43,8 +42,8 @@ public class UserServiceImpl implements UserService {
     registrationRequest.setPassword(encodedPass);
     MultipartFile image = registrationRequest.getImage();
     byte[] bytes = null;
-    if(image != null){
-     bytes = image.getBytes();
+    if (image != null) {
+      bytes = image.getBytes();
     }
     User user = userMapper.toEntity(registrationRequest, bytes);
     User savedUser = userRepository.save(user);
