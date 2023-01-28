@@ -26,7 +26,5 @@ public class ExecutedExercise extends Exercise {
   private LocalDate startDateTime;
   @Column(name = "end_date_time")
   private LocalDate endDateTime;
-  @Column(name = "rest_time")
-  private Long restTime;
 
 }

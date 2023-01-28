@@ -32,5 +32,15 @@
       onDelete="RESTRICT"
       onUpdate="RESTRICT"/>
   </changeSet>
+  <changeSet id="1.1.1" author="fh.dba" context="local, dev, prod">
+    <addColumn tableName="program">
+      <column name="program_description" type="varchar(64)">
+        <constraints nullable="true" />
+      </column>
+      <column name="program_name" type="varchar(64)">
+        <constraints nullable="true" />
+      </column>
+    </addColumn>
+  </changeSet>
 
 </databaseChangeLog>
