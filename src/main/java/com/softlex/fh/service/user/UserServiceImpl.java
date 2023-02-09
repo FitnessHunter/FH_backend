@@ -53,7 +53,6 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public TokenResponse login(LoginRequest loginRequest) {
-    try {
       Optional<User> userOptional = userRepository.findByEmail(loginRequest.getEmail());
       if (userOptional.isPresent()) {
         User user = userOptional.get();
@@ -62,9 +61,6 @@ public class UserServiceImpl implements UserService {
       } else {
         throw new AuthenticationCredentialsNotFoundException("Invalid Login Credentials");
       }
-    } catch (AuthenticationException authExc) {
-      throw new RuntimeException("Invalid Login Credentials");
-    }
   }
 
   @Override
