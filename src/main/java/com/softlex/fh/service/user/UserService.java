@@ -14,8 +14,6 @@ public interface UserService {
 
   TokenResponse login(LoginRequest loginRequest);
 
-  UserPrincipal loadUserByUsername(String email) throws UsernameNotFoundException;
-
   UserInfoResponse getUserDetails(Long userId);
 
 }

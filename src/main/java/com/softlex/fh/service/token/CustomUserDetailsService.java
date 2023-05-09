@@ -1,5 +1,6 @@
 package com.softlex.fh.service.token;
 
+import com.softlex.fh.dto.user.UserPrincipal;
 import com.softlex.fh.entity.user.User;
 import com.softlex.fh.entity.user.UserRepository;
 import java.util.Collections;
@@ -18,15 +19,16 @@ public class CustomUserDetailsService implements UserDetailsService {
   private UserRepository userRepository;
 
   @Override
-  public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+  public UserPrincipal loadUserByUsername(String email) throws UsernameNotFoundException {
     Optional<User> userRes = userRepository.findByEmail(email);
     if (userRes.isEmpty()) {
       throw new UsernameNotFoundException("Could not findUser with email = " + email);
     }
     User user = userRes.get();
-    return new org.springframework.security.core.userdetails.User(
-        email,
-        user.getPassword(),
-        Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER")));
+    return new UserPrincipal(
+            user.getId(),
+            email,
+            user.getPassword(),
+            Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER")));
   }
 }
