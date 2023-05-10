@@ -1,12 +1,13 @@
 package com.softlex.fh.service.training;
 
 import com.softlex.fh.dto.request.CreateTrainingRequest;
+import com.softlex.fh.dto.training.TrainingDto;
 import com.softlex.fh.entity.training.Training;
 
 public interface TrainingService {
 
-  Training getTraining(Long trainingId);
+  TrainingDto getTraining(Long trainingId);
 
-  Training createTraining(CreateTrainingRequest createTrainingRequest);
+  TrainingDto createTraining(CreateTrainingRequest createTrainingRequest);
 
 }

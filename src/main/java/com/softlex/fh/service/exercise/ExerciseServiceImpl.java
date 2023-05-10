@@ -1,5 +1,6 @@
 package com.softlex.fh.service.exercise;
 
+import com.softlex.fh.dto.exercise.ExerciseDto;
 import com.softlex.fh.dto.request.CreateExerciseRequest;
 import com.softlex.fh.entity.exercise.Exercise;
 import com.softlex.fh.entity.exercise.ExerciseRepository;
@@ -20,16 +21,18 @@ public class ExerciseServiceImpl implements ExerciseService {
     private ExerciseMapper exerciseMapper;
 
     @Override
-    public Exercise getExercise(Long exerciseId) {
+    public ExerciseDto getExercise(Long exerciseId) {
         Optional<Exercise> exerciseOptional = exerciseRepository.findById(exerciseId);
-        return exerciseOptional.orElseThrow(() -> new EntityNotFoundException("Wrong exercise id"));
+        Exercise exercise = exerciseOptional.orElseThrow(() -> new EntityNotFoundException("Wrong exercise id"));
+        return exerciseMapper.toDto(exercise);
     }
 
     @Override
-    public Exercise createExercise(CreateExerciseRequest createExerciseRequest) {
+    public ExerciseDto createExercise(CreateExerciseRequest createExerciseRequest) {
         Optional<Training> trainingOptional = trainingRepository.findById(createExerciseRequest.getTrainingId());
         Training training = trainingOptional.orElseThrow(() -> new EntityNotFoundException("Wrong training id"));
         Exercise exercise = exerciseMapper.toEntity(createExerciseRequest, training);
-        return exerciseRepository.save(exercise);
+        Exercise savedExercise = exerciseRepository.save(exercise);
+        return exerciseMapper.toDto(savedExercise);
     }
 }

@@ -1,6 +1,8 @@
 package com.softlex.fh.controller.user;
 
-import com.softlex.fh.dto.response.UserInfoResponse;
+import com.fasterxml.jackson.annotation.JsonView;
+import com.softlex.fh.commons.Views;
+import com.softlex.fh.dto.user.UserDto;
 import com.softlex.fh.service.user.UserService;
 import com.softlex.fh.web.BaseControllerAdvice;
 import lombok.AllArgsConstructor;
@@ -13,12 +15,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/user")
 public class UserController extends BaseControllerAdvice {
 
-  private UserService userService;
+    private UserService userService;
 
-  @GetMapping
-  public UserInfoResponse getCurrentUserInfo() {
-    Long userId = getCurrentUserId();
-    return userService.getUserDetails(userId);
-  }
+    @GetMapping
+    @JsonView(Views.UserInfo.class)
+    public UserDto getCurrentUserInfo() {
+        Long userId = getCurrentUserId();
+        return userService.getUserDetails(userId);
+    }
 
 }

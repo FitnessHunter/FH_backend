@@ -1,5 +1,6 @@
 package com.softlex.fh.service.exercise;
 
+import com.softlex.fh.dto.exercise.ExerciseDto;
 import com.softlex.fh.dto.request.CreateExerciseRequest;
 import com.softlex.fh.entity.exercise.Exercise;
 import com.softlex.fh.entity.training.Training;
@@ -13,4 +14,6 @@ public interface ExerciseMapper {
     @Mapping(target = "restTime", source = "createExerciseRequest.restTime")
     @Mapping(target = "ordinalNumber", source = "createExerciseRequest.ordinalNumber")
     Exercise toEntity(CreateExerciseRequest createExerciseRequest, Training training);
+
+    ExerciseDto toDto(Exercise exercise);
 }

@@ -1,12 +1,15 @@
 package com.softlex.fh.service.program;
 
+import com.softlex.fh.dto.program.ProgramDto;
 import com.softlex.fh.dto.request.CreateProgramRequest;
 import com.softlex.fh.entity.program.Program;
 import com.softlex.fh.entity.program.ProgramRepository;
 import com.softlex.fh.entity.user.User;
 import com.softlex.fh.entity.user.UserRepository;
+
 import java.util.Optional;
 import javax.persistence.EntityNotFoundException;
+
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,31 +17,25 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class ProgramServiceImpl implements ProgramService {
 
-  private ProgramMapper programMapper;
-  private ProgramRepository programRepository;
-  private UserRepository userRepository;
+    private ProgramMapper programMapper;
+    private ProgramRepository programRepository;
+    private UserRepository userRepository;
 
-  @Override
-  public Program getProgram(Long programId) {
-    Optional<Program> programOptional = programRepository.findById(programId);
-    if (programOptional.isPresent()) {
-      return programOptional.get();
-    } else {
-      throw new EntityNotFoundException("Wrong program id");
+    @Override
+    public ProgramDto getProgram(Long programId) {
+        Optional<Program> programOptional = programRepository.findById(programId);
+        Program program = programOptional.orElseThrow(() -> new EntityNotFoundException("Wrong program id"));
+        return programMapper.toDto(program);
     }
-  }
 
-  @Override
-  public Program createProgram(CreateProgramRequest createProgramRequest) {
-    Optional<User> ownerOptional = userRepository.findById(createProgramRequest.getOwnerId());
-    Optional<User> sportsmanOptional = userRepository.findById(createProgramRequest.getSportsmanId());
-    if (ownerOptional.isPresent() && sportsmanOptional.isPresent()) {
-      User owner = ownerOptional.get();
-      User sportsman = sportsmanOptional.get();
-      Program program = programMapper.toEntity(createProgramRequest, owner, sportsman);
-      return programRepository.save(program);
-    } else {
-      throw new EntityNotFoundException("Wrong ownerId or sportsmanId");
+    @Override
+    public ProgramDto createProgram(CreateProgramRequest createProgramRequest) {
+        Optional<User> ownerOptional = userRepository.findById(createProgramRequest.getOwnerId());
+        Optional<User> sportsmanOptional = userRepository.findById(createProgramRequest.getSportsmanId());
+        User owner = ownerOptional.orElseThrow(() -> new EntityNotFoundException("Wrong owner id"));
+        User sportsman = sportsmanOptional.orElseThrow(() -> new EntityNotFoundException("Wrong sportsman id"));
+        Program program = programMapper.toEntity(createProgramRequest, owner, sportsman);
+        Program savedProgram = programRepository.save(program);
+        return programMapper.toDto(savedProgram);
     }
-  }
 }

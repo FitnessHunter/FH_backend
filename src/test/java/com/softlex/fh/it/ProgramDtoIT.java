@@ -4,9 +4,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.softlex.fh.ApiApplication;
 import com.softlex.fh.container.SingletonPostgresqlContainer;
 import com.softlex.fh.dto.request.CreateProgramRequest;
+import com.softlex.fh.entity.program.Program;
 import com.softlex.fh.entity.program.ProgramRepository;
 import com.softlex.fh.entity.user.UserRepository;
 import org.junit.ClassRule;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +28,10 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 import org.testcontainers.containers.PostgreSQLContainer;
 
+import java.util.List;
+
 import static com.softlex.fh.TConst.*;
+import static org.junit.Assert.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -35,7 +40,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebAppConfiguration
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
-public class ProgramIT {
+public class ProgramDtoIT {
 
     @ClassRule
     public static PostgreSQLContainer<SingletonPostgresqlContainer> postgreSQLContainer = SingletonPostgresqlContainer.getInstance();
@@ -44,7 +49,6 @@ public class ProgramIT {
     @Autowired
     private MockMvc mockMvc;
 
-    HttpHeaders headers = new HttpHeaders();
     @Autowired
     private WebApplicationContext webApplicationContext;
     @Autowired
@@ -73,6 +77,8 @@ public class ProgramIT {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("application/json"))
                 .andExpect(content().json(mapper.writeValueAsString(DEFAULT_PROGRAM)));
+        List<Program> all = programRepository.findAll();
+        Assertions.assertEquals(1, all.size());
 
     }
 }

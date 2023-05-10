@@ -1,6 +1,7 @@
 package com.softlex.fh.controller.training;
 
 import com.softlex.fh.dto.request.CreateTrainingRequest;
+import com.softlex.fh.dto.training.TrainingDto;
 import com.softlex.fh.entity.training.Training;
 import com.softlex.fh.service.training.TrainingService;
 import lombok.AllArgsConstructor;
@@ -18,12 +19,12 @@ public class TrainingController {
   private TrainingService trainingService;
 
   @GetMapping("/training/{trainingId}")
-  public Training getProgram(@PathVariable Long trainingId) {
+  public TrainingDto getProgram(@PathVariable Long trainingId) {
     return trainingService.getTraining(trainingId);
   }
 
   @PostMapping("/training")
-  public Training createProgram(CreateTrainingRequest createTrainingRequest) {
+  public TrainingDto createProgram(CreateTrainingRequest createTrainingRequest) {
     return trainingService.createTraining(createTrainingRequest);
   }
 }

@@ -1,5 +1,6 @@
 package com.softlex.fh.service.program;
 
+import com.softlex.fh.dto.program.ProgramDto;
 import com.softlex.fh.dto.request.CreateProgramRequest;
 import com.softlex.fh.entity.program.Program;
 import com.softlex.fh.entity.user.User;
@@ -14,4 +15,5 @@ public interface ProgramMapper {
   @Mapping(target = "programName", source = "createProgramRequest.programName")
   Program toEntity(CreateProgramRequest createProgramRequest, User owner, User sportsman);
 
+  ProgramDto toDto(Program program);
 }

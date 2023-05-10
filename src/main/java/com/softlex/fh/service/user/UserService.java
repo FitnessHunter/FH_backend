@@ -3,10 +3,9 @@ package com.softlex.fh.service.user;
 import com.softlex.fh.dto.request.LoginRequest;
 import com.softlex.fh.dto.request.RegistrationRequest;
 import com.softlex.fh.dto.response.TokenResponse;
-import com.softlex.fh.dto.response.UserInfoResponse;
-import com.softlex.fh.dto.user.UserPrincipal;
+import com.softlex.fh.dto.user.UserDto;
+
 import java.io.IOException;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 public interface UserService {
 
@@ -14,6 +13,6 @@ public interface UserService {
 
   TokenResponse login(LoginRequest loginRequest);
 
-  UserInfoResponse getUserDetails(Long userId);
+  UserDto getUserDetails(Long userId);
 
 }

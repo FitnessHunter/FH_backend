@@ -1,5 +1,6 @@
 package com.softlex.fh.controller.excersice;
 
+import com.softlex.fh.dto.exercise.ExerciseDto;
 import com.softlex.fh.dto.request.CreateExerciseRequest;
 import com.softlex.fh.entity.exercise.Exercise;
 import com.softlex.fh.service.exercise.ExerciseService;
@@ -14,12 +15,12 @@ public class ExerciseController {
   private ExerciseService exerciseService;
 
   @GetMapping("/exercise/{exerciseId}")
-  public Exercise getProgram(@PathVariable Long exerciseId) {
+  public ExerciseDto getProgram(@PathVariable Long exerciseId) {
     return exerciseService.getExercise(exerciseId);
   }
 
   @PostMapping("/exercise")
-  public Exercise createProgram(CreateExerciseRequest createExerciseRequest) {
+  public ExerciseDto createProgram(CreateExerciseRequest createExerciseRequest) {
     return exerciseService.createExercise(createExerciseRequest);
   }
 }

@@ -20,7 +20,7 @@ import org.testcontainers.containers.PostgreSQLContainer;
 @ExtendWith(SpringExtension.class)
 @ActiveProfiles("test")
 @SpringBootTest(classes = {TestContainerConfig.class, ApiApplication.class})
-class TrainingServiceImplTest {
+class TrainingDtoServiceImplTest {
   @Autowired
   private ProgramRepository programRepository;
 

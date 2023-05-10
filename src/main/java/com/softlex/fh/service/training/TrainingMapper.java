@@ -1,6 +1,7 @@
 package com.softlex.fh.service.training;
 
 import com.softlex.fh.dto.request.CreateTrainingRequest;
+import com.softlex.fh.dto.training.TrainingDto;
 import com.softlex.fh.entity.program.Program;
 import com.softlex.fh.entity.training.Training;
 import org.mapstruct.Mapper;
@@ -12,4 +13,5 @@ public interface TrainingMapper {
   @Mapping(target = "id", ignore = true)
   Training toEntity(CreateTrainingRequest createTrainingRequest, Program program);
 
+  TrainingDto toDto(Training training);
 }
