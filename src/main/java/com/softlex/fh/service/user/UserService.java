@@ -4,7 +4,6 @@ import com.softlex.fh.dto.request.LoginRequest;
 import com.softlex.fh.dto.request.RegistrationRequest;
 import com.softlex.fh.dto.response.TokenResponse;
 import com.softlex.fh.dto.user.UserDto;
-
 import java.io.IOException;
 
 public interface UserService {

@@ -2,7 +2,6 @@ package com.softlex.fh.controller.training;
 
 import com.softlex.fh.dto.request.CreateTrainingRequest;
 import com.softlex.fh.dto.training.TrainingDto;
-import com.softlex.fh.entity.training.Training;
 import com.softlex.fh.service.training.TrainingService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;

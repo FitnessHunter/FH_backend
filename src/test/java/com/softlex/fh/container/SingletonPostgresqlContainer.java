@@ -1,38 +1,39 @@
 package com.softlex.fh.container;
 
-import org.springframework.test.context.DynamicPropertyRegistry;
-import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.PostgreSQLContainer;
 
-public class SingletonPostgresqlContainer extends PostgreSQLContainer<SingletonPostgresqlContainer> {
-    private static final String IMAGE_VERSION = "postgres:14.1";
-    private static SingletonPostgresqlContainer container;
+public class SingletonPostgresqlContainer extends
+    PostgreSQLContainer<SingletonPostgresqlContainer> {
 
-    private SingletonPostgresqlContainer() {
-        super(IMAGE_VERSION);
-    }
+  private static final String IMAGE_VERSION = "postgres:14.1";
+  private static SingletonPostgresqlContainer container;
 
-    public static SingletonPostgresqlContainer getInstance() {
-        if (container == null) {
-            container = new SingletonPostgresqlContainer();
-        }
-        container.start();
-        return container;
-    }
+  private SingletonPostgresqlContainer() {
+    super(IMAGE_VERSION);
+  }
 
-    @Override
-    public void start() {
-        super.start();
-        System.setProperty("spring.datasource.url", container.getJdbcUrl());
-        System.setProperty("spring.datasource.username", container.getUsername());
-        System.setProperty("spring.datasource.password", container.getPassword());
+  public static SingletonPostgresqlContainer getInstance() {
+    if (container == null) {
+      container = new SingletonPostgresqlContainer();
     }
-//    @DynamicPropertySource
+    container.start();
+    return container;
+  }
+
+  @Override
+  public void start() {
+    super.start();
+    System.setProperty("spring.datasource.url", container.getJdbcUrl());
+    System.setProperty("spring.datasource.username", container.getUsername());
+    System.setProperty("spring.datasource.password", container.getPassword());
+  }
+
+  //    @DynamicPropertySource
 //    static void postgresqlProperties(DynamicPropertyRegistry registry) {
 //        registry.add("spring.liquibase.contexts", () -> "!prod");
 //    }
-    @Override
-    public void stop() {
-        //do nothing, JVM handles shut down
-    }
+  @Override
+  public void stop() {
+    //do nothing, JVM handles shut down
+  }
 }

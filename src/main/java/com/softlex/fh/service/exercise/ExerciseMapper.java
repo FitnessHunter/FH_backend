@@ -10,10 +10,10 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface ExerciseMapper {
 
-    @Mapping(target = "id", ignore = true)
-    @Mapping(target = "restTime", source = "createExerciseRequest.restTime")
-    @Mapping(target = "ordinalNumber", source = "createExerciseRequest.ordinalNumber")
-    Exercise toEntity(CreateExerciseRequest createExerciseRequest, Training training);
+  @Mapping(target = "id", ignore = true)
+  @Mapping(target = "restTime", source = "createExerciseRequest.restTime")
+  @Mapping(target = "ordinalNumber", source = "createExerciseRequest.ordinalNumber")
+  Exercise toEntity(CreateExerciseRequest createExerciseRequest, Training training);
 
-    ExerciseDto toDto(Exercise exercise);
+  ExerciseDto toDto(Exercise exercise);
 }

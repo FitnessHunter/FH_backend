@@ -1,12 +1,10 @@
 package com.softlex.fh.dto.exercise;
 
 import com.softlex.fh.entity.training.Training;
+import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 
 @Data
 @AllArgsConstructor

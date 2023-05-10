@@ -15,13 +15,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/user")
 public class UserController extends BaseControllerAdvice {
 
-    private UserService userService;
+  private UserService userService;
 
-    @GetMapping
-    @JsonView(Views.UserInfo.class)
-    public UserDto getCurrentUserInfo() {
-        Long userId = getCurrentUserId();
-        return userService.getUserDetails(userId);
-    }
+  @GetMapping
+  @JsonView(Views.UserInfo.class)
+  public UserDto getCurrentUserInfo() {
+    Long userId = getCurrentUserId();
+    return userService.getUserDetails(userId);
+  }
 
 }

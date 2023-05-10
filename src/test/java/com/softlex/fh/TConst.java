@@ -23,18 +23,17 @@ public class TConst {
       .password("password")
       .build();
 
-
   public static final Program DEFAULT_PROGRAM = Program.builder()
-          .programName("Program name")
-          .programDescription("Program description")
-          .id(1L)
-          .owner(DEFAULT_USER)
-          .sportsman(DEFAULT_USER_SPORTSMEN)
-          .build();
+      .programName("Program name")
+      .programDescription("Program description")
+      .id(1L)
+      .owner(DEFAULT_USER)
+      .sportsman(DEFAULT_USER_SPORTSMEN)
+      .build();
 
   public static final CreateProgramRequest DEFAULT_CREATE_PROGRAM_REQUEST = new CreateProgramRequest()
-          .setOwnerId(1L)
-          .setProgramName("Program name")
-          .setProgramDescription("Program description")
-          .setSportsmanId(2L);
+      .setOwnerId(1L)
+      .setProgramName("Program name")
+      .setProgramDescription("Program description")
+      .setSportsmanId(2L);
 }

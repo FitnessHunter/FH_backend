@@ -30,7 +30,8 @@ public class JwtService {
         .sign(Algorithm.HMAC256(secret));
   }
 
-  public Map<String, Object> validateTokenAndRetrieveSubject(String token) throws JWTVerificationException {
+  public Map<String, Object> validateTokenAndRetrieveSubject(String token)
+      throws JWTVerificationException {
     JWTVerifier verifier = JWT.require(Algorithm.HMAC256(secret))
         .withSubject("User Details")
         .withIssuer("YOUR APPLICATION/PROJECT/COMPANY NAME")

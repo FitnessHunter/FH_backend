@@ -12,7 +12,8 @@ public class UserPrincipal extends User {
 
   private Long id;
 
-  public UserPrincipal(Long id, String username, String password, Collection<? extends GrantedAuthority> authorities) {
+  public UserPrincipal(Long id, String username, String password,
+      Collection<? extends GrantedAuthority> authorities) {
     super(username, password, authorities);
     this.id = id;
   }

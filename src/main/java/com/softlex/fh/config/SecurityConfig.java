@@ -32,11 +32,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
       "/webjars/**",
       "/auth/**"
   };
-  private JwtAuthenticationFilter filter;
-  private final Logger log = LogManager.getLogger(SecurityConfig.class);
-  private CustomUserDetailsService uds;
-
   private static final List<String> allowedOrigins = List.of("http://localhost:3000");
+  private final Logger log = LogManager.getLogger(SecurityConfig.class);
+  private JwtAuthenticationFilter filter;
+  private CustomUserDetailsService uds;
 
   @Override
   protected void configure(HttpSecurity http) throws Exception {
@@ -47,7 +46,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
           CorsConfiguration corsConfiguration = new CorsConfiguration();
           corsConfiguration.setAllowedOriginPatterns(allowedOrigins);
           corsConfiguration.setAllowedHeaders(List.of("*"));
-          corsConfiguration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "PUT", "OPTIONS", "PATCH", "DELETE"));
+          corsConfiguration.setAllowedMethods(
+              List.of("GET", "POST", "PUT", "DELETE", "PUT", "OPTIONS", "PATCH", "DELETE"));
           corsConfiguration.setAllowCredentials(true);
           corsConfiguration.applyPermitDefaultValues();
           return corsConfiguration;

@@ -2,7 +2,6 @@ package com.softlex.fh.controller.program;
 
 import com.softlex.fh.dto.program.ProgramDto;
 import com.softlex.fh.dto.request.CreateProgramRequest;
-import com.softlex.fh.entity.program.Program;
 import com.softlex.fh.service.program.ProgramService;
 import com.softlex.fh.web.BaseControllerAdvice;
 import lombok.AllArgsConstructor;

@@ -1,26 +1,21 @@
 package com.softlex.fh.dto.exercise;
 
 import com.softlex.fh.entity.exercise.ExerciseCondition;
+import java.time.LocalDate;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
-import java.time.LocalDate;
-
+@EqualsAndHashCode(callSuper = true)
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class ExecutedExerciseDto extends ExerciseDto {
 
-  @Enumerated(EnumType.STRING)
-  @Column(name = "condition")
   private ExerciseCondition condition;
-  @Column(name = "comment")
   private String comment;
-  @Column(name = "start_date_time")
   private LocalDate startDateTime;
-  @Column(name = "end_date_time")
   private LocalDate endDateTime;
 
 }
