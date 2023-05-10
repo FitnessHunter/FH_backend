@@ -17,5 +17,5 @@ public class ProgramDto {
   private UserDto sportsman;
   private String programDescription;
   private String programName;
-  private List<TrainingDto> trainingList;
+  private List<TrainingDto> trainingDtoList;
 }

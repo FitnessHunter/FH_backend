@@ -9,10 +9,12 @@ import com.softlex.fh.entity.user.UserRepository;
 import java.util.Optional;
 import javax.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
+@Slf4j
 public class ProgramServiceImpl implements ProgramService {
 
   private ProgramMapper programMapper;
@@ -21,14 +23,18 @@ public class ProgramServiceImpl implements ProgramService {
 
   @Override
   public ProgramDto getProgram(Long programId) {
+    log.debug("Get program with id {}", programId);
     Optional<Program> programOptional = programRepository.findById(programId);
     Program program = programOptional.orElseThrow(
         () -> new EntityNotFoundException("Wrong program id"));
-    return programMapper.toDto(program);
+    ProgramDto dto = programMapper.toDto(program);
+    log.debug("Return program {}", dto);
+    return dto;
   }
 
   @Override
   public ProgramDto createProgram(CreateProgramRequest createProgramRequest) {
+    log.debug("Create program {}", createProgramRequest);
     Optional<User> ownerOptional = userRepository.findById(createProgramRequest.getOwnerId());
     Optional<User> sportsmanOptional = userRepository.findById(
         createProgramRequest.getSportsmanId());
@@ -37,6 +43,8 @@ public class ProgramServiceImpl implements ProgramService {
         () -> new EntityNotFoundException("Wrong sportsman id"));
     Program program = programMapper.toEntity(createProgramRequest, owner, sportsman);
     Program savedProgram = programRepository.save(program);
-    return programMapper.toDto(savedProgram);
+    ProgramDto dto = programMapper.toDto(savedProgram);
+    log.debug("Return created program {}", dto);
+    return dto;
   }
 }

@@ -11,6 +11,7 @@ import com.softlex.fh.service.token.JwtService;
 import java.io.IOException;
 import java.util.Optional;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Service
 @AllArgsConstructor
+@Slf4j
 public class UserServiceImpl implements UserService {
 
   private PasswordEncoder passwordEncoder;
@@ -27,6 +29,7 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public TokenResponse registerUser(RegistrationRequest registrationRequest) throws IOException {
+    log.info("Register user {}", registrationRequest);
     String email = registrationRequest.getEmail();
     if (userRepository.existsUserByEmail(email)) {
       throw new DBConflictException(String.format("User with email %s already exists", email));
@@ -41,15 +44,18 @@ public class UserServiceImpl implements UserService {
     User user = userMapper.toEntity(registrationRequest, bytes);
     User savedUser = userRepository.save(user);
     String token = jwtUtil.generateToken(savedUser);
+    log.info("Return registered user token {}", token);
     return new TokenResponse(token);
   }
 
   @Override
   public TokenResponse login(LoginRequest loginRequest) {
+    log.info("Login {}", loginRequest);
     Optional<User> userOptional = userRepository.findByEmail(loginRequest.getEmail());
     User user = userOptional.orElseThrow(
         () -> new AuthenticationCredentialsNotFoundException("Invalid Login Credentials"));
     String token = jwtUtil.generateToken(user);
+    log.info("Authorized user token {}", token);
     return new TokenResponse(token);
   }
 

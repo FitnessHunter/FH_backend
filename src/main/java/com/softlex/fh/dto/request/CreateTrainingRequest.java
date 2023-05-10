@@ -1,10 +1,10 @@
 package com.softlex.fh.dto.request;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.time.LocalDate;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.format.annotation.DateTimeFormat;
 
 @Data
 @NoArgsConstructor
@@ -14,6 +14,6 @@ public class CreateTrainingRequest {
   private Long programId;
   private String name;
   private String description;
-  @DateTimeFormat(pattern = "dd.MM.yyyy")
+  @JsonFormat(pattern = "dd.MM.yyyy")
   private LocalDate date;
 }

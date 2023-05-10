@@ -9,10 +9,12 @@ import com.softlex.fh.entity.training.TrainingRepository;
 import java.util.Optional;
 import javax.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
+@Slf4j
 public class ExerciseServiceImpl implements ExerciseService {
 
   private ExerciseRepository exerciseRepository;
@@ -21,20 +23,26 @@ public class ExerciseServiceImpl implements ExerciseService {
 
   @Override
   public ExerciseDto getExercise(Long exerciseId) {
+    log.debug("Get exercise with id: {}", exerciseId);
     Optional<Exercise> exerciseOptional = exerciseRepository.findById(exerciseId);
     Exercise exercise = exerciseOptional.orElseThrow(
         () -> new EntityNotFoundException("Wrong exercise id"));
-    return exerciseMapper.toDto(exercise);
+    ExerciseDto dto = exerciseMapper.toDto(exercise);
+    log.debug("Return exercise {}", dto);
+    return dto;
   }
 
   @Override
   public ExerciseDto createExercise(CreateExerciseRequest createExerciseRequest) {
+    log.debug("Create exercise {}", createExerciseRequest);
     Optional<Training> trainingOptional = trainingRepository.findById(
         createExerciseRequest.getTrainingId());
     Training training = trainingOptional.orElseThrow(
         () -> new EntityNotFoundException("Wrong training id"));
     Exercise exercise = exerciseMapper.toEntity(createExerciseRequest, training);
     Exercise savedExercise = exerciseRepository.save(exercise);
-    return exerciseMapper.toDto(savedExercise);
+    ExerciseDto dto = exerciseMapper.toDto(savedExercise);
+    log.debug("Return created exercise {}", dto);
+    return dto;
   }
 }

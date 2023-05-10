@@ -38,9 +38,9 @@ public class Program {
   @ManyToOne
   @JoinColumn(name = "sportsman_id", nullable = false)
   private User sportsman;
-  @Column(name = "programDescription")
+  @Column(name = "program_description")
   private String programDescription;
-  @Column(name = "programName")
+  @Column(name = "program_name")
   private String programName;
   @OneToMany(fetch = FetchType.LAZY, mappedBy = "program")
   private List<Training> trainingList;

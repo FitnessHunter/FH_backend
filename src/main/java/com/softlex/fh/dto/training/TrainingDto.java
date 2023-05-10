@@ -1,28 +1,32 @@
 package com.softlex.fh.dto.training;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.softlex.fh.dto.exercise.ExerciseDto;
 import com.softlex.fh.dto.program.ProgramDto;
-import com.softlex.fh.entity.program.Program;
-import lombok.*;
-
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
+import java.util.List;
+import javax.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class TrainingDto {
 
+  @NotNull
+  LocalDate date;
   private Long id;
   @NotNull
   private String name;
   private String description;
-  @NotNull
-  LocalDate date;
   @ToString.Exclude
   @EqualsAndHashCode.Exclude
   @JsonIgnore
-  private ProgramDto program;
+  private ProgramDto programDto;
+  private List<ExerciseDto> exerciseDtoList;
 
 }

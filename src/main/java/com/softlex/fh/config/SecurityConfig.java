@@ -5,8 +5,6 @@ import com.softlex.fh.service.token.CustomUserDetailsService;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -33,7 +31,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
       "/auth/**"
   };
   private static final List<String> allowedOrigins = List.of("http://localhost:3000");
-  private final Logger log = LogManager.getLogger(SecurityConfig.class);
   private JwtAuthenticationFilter filter;
   private CustomUserDetailsService uds;
 

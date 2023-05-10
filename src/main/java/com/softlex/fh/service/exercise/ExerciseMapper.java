@@ -15,5 +15,7 @@ public interface ExerciseMapper {
   @Mapping(target = "ordinalNumber", source = "createExerciseRequest.ordinalNumber")
   Exercise toEntity(CreateExerciseRequest createExerciseRequest, Training training);
 
+  @Mapping(target = "trainingDto", ignore = true)
+  @Mapping(target = "attemptDtoList", source = "attemptList")
   ExerciseDto toDto(Exercise exercise);
 }
