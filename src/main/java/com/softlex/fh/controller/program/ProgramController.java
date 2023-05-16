@@ -5,29 +5,26 @@ import com.softlex.fh.dto.request.CreateProgramRequest;
 import com.softlex.fh.service.program.ProgramService;
 import com.softlex.fh.web.BaseControllerAdvice;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api")
 public class ProgramController extends BaseControllerAdvice {
 
-  private ProgramService programService;
+    private ProgramService programService;
 
-  @GetMapping("/program/{programId}")
-  public ProgramDto getProgram(@PathVariable Long programId) {
-    return programService.getProgram(programId);
-  }
+    @GetMapping("/program/{programId}")
+    public ProgramDto getProgram(@PathVariable Long programId) {
+        return programService.getProgram(programId);
+    }
 
-  @PostMapping("/program")
-  public ProgramDto createProgram(@RequestBody CreateProgramRequest createProgramRequest) {
-    createProgramRequest.setOwnerId(getCurrentUserId());
-    return programService.createProgram(createProgramRequest);
-  }
+    @PostMapping("/program")
+    @ResponseStatus(HttpStatus.CREATED)
+    public ProgramDto createProgram(@RequestBody CreateProgramRequest createProgramRequest) {
+        createProgramRequest.setOwnerId(getCurrentUserId());
+        return programService.createProgram(createProgramRequest);
+    }
 
 }

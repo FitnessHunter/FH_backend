@@ -4,26 +4,24 @@ import com.softlex.fh.dto.exercise.ExerciseDto;
 import com.softlex.fh.dto.request.CreateExerciseRequest;
 import com.softlex.fh.service.exercise.ExerciseService;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api")
 public class ExerciseController {
 
-  private ExerciseService exerciseService;
+    private ExerciseService exerciseService;
 
-  @GetMapping("/exercise/{exerciseId}")
-  public ExerciseDto getProgram(@PathVariable Long exerciseId) {
-    return exerciseService.getExercise(exerciseId);
-  }
+    @GetMapping("/exercise/{exerciseId}")
+    public ExerciseDto getProgram(@PathVariable Long exerciseId) {
+        return exerciseService.getExercise(exerciseId);
+    }
 
-  @PostMapping("/exercise")
-  public ExerciseDto createProgram(CreateExerciseRequest createExerciseRequest) {
-    return exerciseService.createExercise(createExerciseRequest);
-  }
+    @PostMapping("/exercise")
+    @ResponseStatus(HttpStatus.CREATED)
+    public ExerciseDto createProgram(CreateExerciseRequest createExerciseRequest) {
+        return exerciseService.createExercise(createExerciseRequest);
+    }
 }
