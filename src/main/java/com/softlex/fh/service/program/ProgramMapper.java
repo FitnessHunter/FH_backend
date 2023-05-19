@@ -7,8 +7,12 @@ import com.softlex.fh.entity.user.User;
 import com.softlex.fh.service.training.TrainingMapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.NullValueMappingStrategy;
+import org.mapstruct.NullValuePropertyMappingStrategy;
 
-@Mapper(componentModel = "spring", uses = {TrainingMapper.class})
+@Mapper(componentModel = "spring", uses = {TrainingMapper.class},
+        nullValueMappingStrategy = NullValueMappingStrategy.RETURN_DEFAULT,
+        nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.SET_TO_DEFAULT)
 public interface ProgramMapper {
 
   @Mapping(target = "id", ignore = true)

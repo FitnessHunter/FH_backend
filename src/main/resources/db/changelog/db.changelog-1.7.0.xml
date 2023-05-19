@@ -1,36 +1,36 @@
 <databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
-  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
 
-  <changeSet id="1.7.0" author="fh.dba" context="local, dev, prod">
-    <createTable tableName="executed_exercise">
-      <column name="exercise_id" type="BIGINT" remarks="FK: unique 8-bytes ID">
-        <constraints nullable="false"/>
-      </column>
-      <column name="condition" type="varchar(32)">
-        <constraints nullable="true"/>
-      </column>
-      <column name="comment" type="varchar(128)">
-        <constraints nullable="true"/>
-      </column>
-      <column name="start_date_time" type="TIMESTAMP WITH TIME ZONE">
-        <constraints nullable="true"/>
-      </column>
-      <column name="end_date_time" type="TIMESTAMP WITH TIME ZONE">
-        <constraints nullable="true"/>
-      </column>
-      <column name="rest_time" type="BIGINT" remarks="Amount of seconds">
-        <constraints nullable="true"/>
-      </column>
-    </createTable>
-    <addForeignKeyConstraint baseTableName="executed_exercise"
-      baseColumnNames="exercise_id"
-      constraintName="fk_executed_exercise_to_exercise"
-      referencedTableName="exercise"
-      referencedColumnNames="id"
-      onDelete="RESTRICT"
-      onUpdate="RESTRICT"/>
-  </changeSet>
+    <changeSet id="1.7.0" author="fh.dba" context="local, dev, prod, test">
+        <createTable tableName="executed_exercise">
+            <column name="exercise_id" type="BIGINT" remarks="FK: unique 8-bytes ID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="condition" type="varchar(32)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="comment" type="varchar(128)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="start_date_time" type="TIMESTAMP WITH TIME ZONE">
+                <constraints nullable="true"/>
+            </column>
+            <column name="end_date_time" type="TIMESTAMP WITH TIME ZONE">
+                <constraints nullable="true"/>
+            </column>
+            <column name="rest_time" type="BIGINT" remarks="Amount of seconds">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="executed_exercise"
+                                 baseColumnNames="exercise_id"
+                                 constraintName="fk_executed_exercise_to_exercise"
+                                 referencedTableName="exercise"
+                                 referencedColumnNames="id"
+                                 onDelete="RESTRICT"
+                                 onUpdate="RESTRICT"/>
+    </changeSet>
 
 </databaseChangeLog>

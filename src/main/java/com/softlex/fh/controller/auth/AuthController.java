@@ -16,16 +16,16 @@ import java.io.IOException;
 @RequestMapping("/auth")
 public class AuthController {
 
-    private UserService userService;
+  private UserService userService;
 
-    @PostMapping(value = "/register", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    @ResponseStatus(HttpStatus.CREATED)
-    public TokenResponse registerHandler(RegistrationRequest registrationRequest) throws IOException {
-        return userService.registerUser(registrationRequest);
-    }
+  @PostMapping(value = "/register", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+  @ResponseStatus(HttpStatus.CREATED)
+  public TokenResponse registerHandler(@RequestBody RegistrationRequest registrationRequest) throws IOException {
+    return userService.registerUser(registrationRequest);
+  }
 
-    @PostMapping("/login")
-    public TokenResponse loginHandler(@RequestBody LoginRequest loginRequest) {
-        return userService.login(loginRequest);
-    }
+  @PostMapping("/login")
+  public TokenResponse loginHandler(@RequestBody LoginRequest loginRequest) {
+    return userService.login(loginRequest);
+  }
 }

@@ -3,15 +3,13 @@ package com.softlex.fh.dto.exercise;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.softlex.fh.dto.attempt.AttemptDto;
 import com.softlex.fh.dto.training.TrainingDto;
-import java.util.List;
+import lombok.*;
+
 import javax.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import java.util.List;
 
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class ExerciseDto {

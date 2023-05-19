@@ -12,16 +12,16 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api")
 public class TrainingController {
 
-    private TrainingService trainingService;
+  private TrainingService trainingService;
 
-    @GetMapping("/training/{trainingId}")
-    public TrainingDto getProgram(@PathVariable Long trainingId) {
-        return trainingService.getTraining(trainingId);
-    }
+  @GetMapping("/training/{trainingId}")
+  public TrainingDto getProgram(@PathVariable Long trainingId) {
+    return trainingService.getTraining(trainingId);
+  }
 
-    @PostMapping("/training")
-    @ResponseStatus(HttpStatus.CREATED)
-    public TrainingDto createProgram(@RequestBody CreateTrainingRequest createTrainingRequest) {
-        return trainingService.createTraining(createTrainingRequest);
-    }
+  @PostMapping("/training")
+  @ResponseStatus(HttpStatus.CREATED)
+  public TrainingDto createProgram(@RequestBody CreateTrainingRequest createTrainingRequest) {
+    return trainingService.createTraining(createTrainingRequest);
+  }
 }

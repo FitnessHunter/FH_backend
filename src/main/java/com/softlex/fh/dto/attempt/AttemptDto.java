@@ -2,13 +2,10 @@ package com.softlex.fh.dto.attempt;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.softlex.fh.dto.exercise.ExerciseDto;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class AttemptDto {

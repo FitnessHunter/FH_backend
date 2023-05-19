@@ -1,46 +1,62 @@
 <databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
-  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
 
-  <changeSet id="1.0.0" author="fh.dba" context="local, dev, prod">
-    <createTable tableName="user">
-      <column name="id" type="BIGINT" autoIncrement="true"
-        remarks="PK: unique 8-bytes ID">
-        <constraints primaryKey="true" nullable="false"
-          unique="true"/>
-      </column>
-      <column name="email" type="varchar(64)">
-        <constraints nullable="false"/>
-      </column>
-      <column name="password" type="varchar(64)">
-        <constraints nullable="false"/>
-      </column>
-    </createTable>
-  </changeSet>
+    <changeSet id="1.0.0" author="fh.dba" context="local, dev, prod, test">
+        <createTable tableName="user">
+            <column name="id" type="BIGINT" autoIncrement="true"
+                    remarks="PK: unique 8-bytes ID">
+                <constraints primaryKey="true" nullable="false"
+                             unique="true"/>
+            </column>
+            <column name="email" type="varchar(64)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="password" type="varchar(64)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
 
-  <changeSet id="1.0.1" author="fh.dba" context="local, dev, prod">
-    <renameTable newTableName="user_info"
-      oldTableName="user"/>
-  </changeSet>
+    <changeSet id="1.0.1" author="fh.dba" context="local, dev, prod, test">
+        <renameTable newTableName="user_info"
+                     oldTableName="user"/>
+    </changeSet>
 
-  <changeSet id="1.0.2" author="fh.dba" context="local, dev, prod">
-    <addUniqueConstraint tableName="user_info"
-      columnNames="email"
-      constraintName="user_email_unique"/>
-  </changeSet>
-  <changeSet id="1.0.3" author="fh.dba" context="local, dev, prod">
-    <addColumn tableName="user_info">
-      <column name="first_name" type="varchar(64)">
-        <constraints nullable="true"/>
-      </column>
-      <column name="last_name" type="varchar(64)">
-        <constraints nullable="true"/>
-      </column>
-      <column name="image" type="bytea">
-        <constraints nullable="true"/>
-      </column>
-    </addColumn>
-  </changeSet>
+    <changeSet id="1.0.2" author="fh.dba" context="local, dev, prod, test">
+        <addUniqueConstraint tableName="user_info"
+                             columnNames="email"
+                             constraintName="user_email_unique"/>
+    </changeSet>
+    <changeSet id="1.0.3" author="fh.dba" context="local, dev, prod, test">
+        <addColumn tableName="user_info">
+            <column name="first_name" type="varchar(64)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="last_name" type="varchar(64)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="image" type="bytea">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+    </changeSet>
 
+    <changeSet id="1.0.4" author="fh.dba" context="local, dev, test">
+        <insert tableName="user_info">
+            <column name="id" value="1"/>
+            <column name="first_name" value="FName"/>
+            <column name="last_name" value="LName"/>
+            <column name="password" value="password"/>
+            <column name="email" value="testmail@mail.com"/>
+        </insert>
+        <insert tableName="user_info">
+            <column name="id" value="2"/>
+            <column name="first_name" value="FName sportsmen"/>
+            <column name="last_name" value="LName sportsmen"/>
+            <column name="password" value="password"/>
+            <column name="email" value="sportsmen@mail.com"/>
+        </insert>
+    </changeSet>
 </databaseChangeLog>
