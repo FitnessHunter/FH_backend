@@ -13,18 +13,18 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api")
 public class ProgramController extends BaseControllerAdvice {
 
-    private ProgramService programService;
+  private ProgramService programService;
 
-    @GetMapping("/program/{programId}")
-    public ProgramDto getProgram(@PathVariable Long programId) {
-        return programService.getProgram(programId);
-    }
+  @GetMapping("/program/{programId}")
+  public ProgramDto getProgram(@PathVariable Long programId) {
+    return programService.getProgram(programId);
+  }
 
-    @PostMapping("/program")
-    @ResponseStatus(HttpStatus.CREATED)
-    public ProgramDto createProgram(@RequestBody CreateProgramRequest createProgramRequest) {
-        createProgramRequest.setOwnerId(getCurrentUserId());
-        return programService.createProgram(createProgramRequest);
-    }
+  @PutMapping("/program")
+  @ResponseStatus(HttpStatus.CREATED)
+  public ProgramDto createProgram(@RequestBody CreateProgramRequest createProgramRequest) {
+    createProgramRequest.setOwnerId(getCurrentUserId());
+    return programService.createProgram(createProgramRequest);
+  }
 
 }

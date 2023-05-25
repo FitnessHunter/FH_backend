@@ -20,7 +20,7 @@ public class ExerciseController extends BaseControllerAdvice {
     return exerciseService.getExercise(exerciseId);
   }
 
-  @PostMapping("/exercise")
+  @PutMapping("/exercise")
   @ResponseStatus(HttpStatus.CREATED)
   public ExerciseDto createProgram(@RequestBody CreateExerciseRequest createExerciseRequest) {
     return exerciseService.createExercise(createExerciseRequest);

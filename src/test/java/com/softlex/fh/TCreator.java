@@ -3,6 +3,7 @@ package com.softlex.fh;
 import com.softlex.fh.dto.attempt.AttemptDto;
 import com.softlex.fh.dto.exercise.ExerciseDto;
 import com.softlex.fh.dto.program.ProgramDto;
+import com.softlex.fh.dto.request.CreateAttemptRequest;
 import com.softlex.fh.dto.request.CreateExerciseRequest;
 import com.softlex.fh.dto.request.CreateProgramRequest;
 import com.softlex.fh.dto.request.CreateTrainingRequest;
@@ -33,9 +34,19 @@ public class TCreator {
 
   public static CreateExerciseRequest getCreateExerciseRequest() {
     return new CreateExerciseRequest()
-            .setTrainingId(1L)
-            .setOrdinalNumber(1)
-            .setRestTime(60);
+            .setTrainingId(DEFAULT_TRAINING_ID)
+            .setOrdinalNumber(DEFAULT_ORDINAL_NUMBER)
+            .setRestTime(DEFAULT_EXERCISE_REST_TIME);
+  }
+
+  public static CreateAttemptRequest getCreateAttemptRequest() {
+    return new CreateAttemptRequest()
+            .setExerciseId(1L)
+            .setWeight(DEFAULT_WEIGHT)
+            .setDuration(DEFAULT_DURATION)
+            .setRepetition(DEFAULT_REPETITION)
+            .setDistance(DEFAULT_DISTANCE)
+            .setRestTime(TConst.DEFAULT_REST_TIME);
   }
 
   public static Exercise getDefaultExercise() {
@@ -91,7 +102,7 @@ public class TCreator {
             .id(2L)
             .firstName("FName sportsmen")
             .lastName("LName sportsmen")
-            .email("sportsmen@mail.com")
+            .email(DEFAULT_SPORTSMAN_EMAIL)
             .password("password")
             .build();
   }
@@ -108,8 +119,8 @@ public class TCreator {
 
   public static Program getDefaultProgram() {
     return Program.builder()
-            .programName("Program name")
-            .programDescription("Program description")
+            .programName(DEFAULT_PROGRAM_NAME)
+            .programDescription(DEFAULT_PROGRAM_DESCRIPTION)
             .id(DEFAULT_PROGRAM_ID)
             .owner(getDefaultUser())
             .sportsman(getDefaultSportsmen())
@@ -150,11 +161,11 @@ public class TCreator {
     return Attempt.builder()
             .id(1L)
             .exercise(getDefaultExercise())
-            .restTime(60L)
-            .distance(10L)
-            .duration(120L)
-            .repetition(5L)
-            .weight(100L)
+            .restTime(DEFAULT_REST_TIME)
+            .distance(DEFAULT_DISTANCE)
+            .duration(DEFAULT_DURATION)
+            .repetition(DEFAULT_REPETITION)
+            .weight(DEFAULT_WEIGHT)
             .build();
   }
 

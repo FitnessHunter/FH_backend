@@ -9,10 +9,7 @@ import com.softlex.fh.entity.program.Program;
 import com.softlex.fh.entity.program.ProgramRepository;
 import com.softlex.fh.entity.training.Training;
 import com.softlex.fh.entity.training.TrainingRepository;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -30,7 +27,7 @@ import java.util.List;
 import static com.softlex.fh.TConst.*;
 import static com.softlex.fh.TCreator.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @ExtendWith(SpringExtension.class)
@@ -50,6 +47,13 @@ public class TrainingIT {
   @Autowired
   private TrainingRepository trainingRepository;
 
+  private Program program;
+
+  @BeforeEach
+  public void setup() {
+    program = programRepository.save(getDefaultProgram());
+  }
+
   @AfterAll
   public void teardown() {
     trainingRepository.deleteAll();
@@ -62,11 +66,10 @@ public class TrainingIT {
     ObjectMapper mapper = JsonMapper.builder()
             .addModule(new JavaTimeModule())
             .build();
-    Program save = programRepository.save(getDefaultProgram());
     CreateTrainingRequest defaultCreateTrainingRequest = getDefaultCreateTrainingRequest();
-    defaultCreateTrainingRequest.setProgramId(save.getId());
+    defaultCreateTrainingRequest.setProgramId(program.getId());
     mockMvc.perform(
-                    post("/api/training")
+                    put("/api/training")
                             .contentType(MediaType.APPLICATION_JSON)
                             .content(mapper.writeValueAsString(defaultCreateTrainingRequest)))
             .andExpect(status().isCreated())
@@ -81,10 +84,11 @@ public class TrainingIT {
   @Test
   @WithUserDetails(value = DEFAULT_USER_EMAIL, userDetailsServiceBeanName = "customUserDetailsService")
   public void getTraining_ShouldReturn() throws Exception {
-    programRepository.save(getDefaultProgram());
-    trainingRepository.save(getDefaultTraining());
+    Training defaultTraining = getDefaultTraining();
+    defaultTraining.setProgram(program);
+    Training save = trainingRepository.save(defaultTraining);
     mockMvc.perform(
-                    get("/api/training/" + DEFAULT_TRAINING_ID))
+                    get("/api/training/" + save.getId()))
             .andExpect(status().isOk())
             .andExpect(content().contentType("application/json"))
             .andExpect(jsonPath("$.description").value(DEFAULT_TRAINING_DESCRIPTION))

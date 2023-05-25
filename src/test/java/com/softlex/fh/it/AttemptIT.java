@@ -2,7 +2,10 @@ package com.softlex.fh.it;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.softlex.fh.config.TestContainerConfig;
-import com.softlex.fh.dto.request.CreateExerciseRequest;
+import com.softlex.fh.dto.attempt.AttemptDto;
+import com.softlex.fh.dto.request.CreateAttemptRequest;
+import com.softlex.fh.entity.attempt.Attempt;
+import com.softlex.fh.entity.attempt.AttemptRepository;
 import com.softlex.fh.entity.exercise.Exercise;
 import com.softlex.fh.entity.exercise.ExerciseRepository;
 import com.softlex.fh.entity.program.Program;
@@ -24,7 +27,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.Collections;
 import java.util.List;
 
 import static com.softlex.fh.TConst.*;
@@ -38,13 +40,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebAppConfiguration
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
-public class ExerciseIT {
+public class AttemptIT {
 
   @Autowired
   private MockMvc mockMvc;
 
   @Autowired
-  private ExerciseRepository exerciseRepository;
+  private AttemptRepository attemptRepository;
 
   @Autowired
   private TrainingRepository trainingRepository;
@@ -52,19 +54,26 @@ public class ExerciseIT {
   @Autowired
   private ProgramRepository programRepository;
 
-  private Training training;
+  @Autowired
+  private ExerciseRepository exerciseRepository;
+
+  private Exercise exercise;
 
   @BeforeEach
   public void setup() {
-    Training defaultTraining = getDefaultTraining();
     Program defaultProgram = getDefaultProgram();
     Program program = programRepository.save(defaultProgram);
+    Training defaultTraining = getDefaultTraining();
     defaultTraining.setProgram(program);
-    training = trainingRepository.save(defaultTraining);
+    Training training = trainingRepository.save(defaultTraining);
+    Exercise defaultExercise = getDefaultExercise();
+    defaultExercise.setTraining(training);
+    exercise = exerciseRepository.save(defaultExercise);
   }
 
   @AfterEach
   public void teardown() {
+    attemptRepository.deleteAll();
     exerciseRepository.deleteAll();
     trainingRepository.deleteAll();
     programRepository.deleteAll();
@@ -72,36 +81,36 @@ public class ExerciseIT {
 
   @Test
   @WithUserDetails(value = DEFAULT_USER_EMAIL, userDetailsServiceBeanName = "customUserDetailsService")
-  public void createExercise_ShouldSave() throws Exception {
-
+  public void createAttempt_ShouldSave() throws Exception {
     ObjectMapper mapper = new ObjectMapper();
-    CreateExerciseRequest createExerciseRequest = getCreateExerciseRequest();
-    createExerciseRequest.setTrainingId(training.getId());
+    CreateAttemptRequest createAttemptRequest = getCreateAttemptRequest();
+    createAttemptRequest.setExerciseId(exercise.getId());
+    AttemptDto defaultAttemptDto = getDefaultAttemptDto();
     mockMvc.perform(
-                    put("/api/exercise")
+                    put("/api/attempt")
                             .contentType(MediaType.APPLICATION_JSON)
-                            .content(mapper.writeValueAsString(createExerciseRequest)))
+                            .content(mapper.writeValueAsString(createAttemptRequest)))
             .andExpect(status().isCreated())
             .andExpect(content().contentType("application/json"))
-            .andExpect(jsonPath("$.ordinalNumber").value(DEFAULT_ORDINAL_NUMBER))
-            .andExpect(jsonPath("$.restTime").value(DEFAULT_EXERCISE_REST_TIME));
-    List<Exercise> all = exerciseRepository.findAll();
+            .andExpect(content().json(mapper.writeValueAsString(defaultAttemptDto)));
+    List<Attempt> all = attemptRepository.findAll();
     Assertions.assertEquals(1, all.size());
   }
 
   @Test
   @WithUserDetails(value = DEFAULT_USER_EMAIL, userDetailsServiceBeanName = "customUserDetailsService")
-  public void getExercise_ShouldReturn() throws Exception {
-
-    Exercise defaultExercise = getDefaultExercise();
-    defaultExercise.setAttemptList(Collections.emptyList());
-    defaultExercise.setTraining(training);
-    Exercise save = exerciseRepository.save(defaultExercise);
+  public void getAttempt_ShouldReturn() throws Exception {
+    Attempt defaultAttempt = getDefaultAttempt();
+    defaultAttempt.setExercise(exercise);
+    Attempt attempt = attemptRepository.save(defaultAttempt);
     mockMvc.perform(
-                    get("/api/exercise/" + save.getId()))
+                    get("/api/attempt/" + attempt.getId()))
             .andExpect(status().isOk())
             .andExpect(content().contentType("application/json"))
-            .andExpect(jsonPath("$.ordinalNumber").value(DEFAULT_ORDINAL_NUMBER))
-            .andExpect(jsonPath("$.restTime").value(DEFAULT_EXERCISE_REST_TIME));
+            .andExpect(jsonPath("$.weight").value(DEFAULT_WEIGHT))
+            .andExpect(jsonPath("$.duration").value(DEFAULT_DURATION))
+            .andExpect(jsonPath("$.repetition").value(DEFAULT_REPETITION))
+            .andExpect(jsonPath("$.distance").value(DEFAULT_DISTANCE))
+            .andExpect(jsonPath("$.restTime").value(DEFAULT_REST_TIME));
   }
 }

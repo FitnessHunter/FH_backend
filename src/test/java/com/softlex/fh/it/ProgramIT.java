@@ -6,10 +6,9 @@ import com.softlex.fh.dto.program.ProgramDto;
 import com.softlex.fh.dto.request.CreateProgramRequest;
 import com.softlex.fh.entity.program.Program;
 import com.softlex.fh.entity.program.ProgramRepository;
-import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -23,21 +22,17 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
 
-import static com.softlex.fh.TConst.DEFAULT_PROGRAM_ID;
-import static com.softlex.fh.TConst.DEFAULT_USER_EMAIL;
-import static com.softlex.fh.TCreator.getCreateProgramRequest;
-import static com.softlex.fh.TCreator.getDefaultProgramDto;
+import static com.softlex.fh.TConst.*;
+import static com.softlex.fh.TCreator.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = {TestContainerConfig.class})
 @WebAppConfiguration
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class ProgramIT {
 
   @Autowired
@@ -46,7 +41,7 @@ public class ProgramIT {
   @Autowired
   private ProgramRepository programRepository;
 
-  @AfterAll
+  @AfterEach
   public void teardown() {
     programRepository.deleteAll();
   }
@@ -58,7 +53,7 @@ public class ProgramIT {
     CreateProgramRequest createProgramRequest = getCreateProgramRequest();
     ProgramDto defaultProgramDto = getDefaultProgramDto();
     mockMvc.perform(
-                    post("/api/program")
+                    put("/api/program")
                             .contentType(MediaType.APPLICATION_JSON)
                             .content(mapper.writeValueAsString(createProgramRequest)))
             .andExpect(status().isCreated())
@@ -71,11 +66,15 @@ public class ProgramIT {
   @Test
   @WithUserDetails(value = DEFAULT_USER_EMAIL, userDetailsServiceBeanName = "customUserDetailsService")
   public void getProgram_ShouldReturn() throws Exception {
-    ObjectMapper mapper = new ObjectMapper();
+    Program defaultProgram = getDefaultProgram();
+    Program program = programRepository.save(defaultProgram);
     mockMvc.perform(
-                    get("/api/program/" + DEFAULT_PROGRAM_ID))
+                    get("/api/program/" + program.getId()))
             .andExpect(status().isOk())
             .andExpect(content().contentType("application/json"))
-            .andExpect(content().json(mapper.writeValueAsString(getDefaultProgramDto())));
+            .andExpect(jsonPath("$.owner.email").value(DEFAULT_USER_EMAIL))
+            .andExpect(jsonPath("$.sportsman.email").value(DEFAULT_SPORTSMAN_EMAIL))
+            .andExpect(jsonPath("$.programDescription").value(DEFAULT_PROGRAM_DESCRIPTION))
+            .andExpect(jsonPath("$.programName").value(DEFAULT_PROGRAM_NAME));
   }
 }

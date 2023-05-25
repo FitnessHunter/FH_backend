@@ -19,7 +19,7 @@ public class TrainingController {
     return trainingService.getTraining(trainingId);
   }
 
-  @PostMapping("/training")
+  @PutMapping("/training")
   @ResponseStatus(HttpStatus.CREATED)
   public TrainingDto createProgram(@RequestBody CreateTrainingRequest createTrainingRequest) {
     return trainingService.createTraining(createTrainingRequest);
